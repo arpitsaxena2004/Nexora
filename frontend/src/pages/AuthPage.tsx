@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import NexoraLogo from '../utils/NexoraLogo.png';
 
 export const AuthPage: React.FC<{ onSuccess?: () => void }> = ({ onSuccess }) => {
   const [isRegister, setIsRegister] = useState(false);
@@ -49,9 +50,11 @@ export const AuthPage: React.FC<{ onSuccess?: () => void }> = ({ onSuccess }) =>
         <div className="absolute -top-24 -left-24 w-48 h-48 bg-primary-500/20 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="text-center space-y-2 relative">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-primary-600 to-indigo-500 flex items-center justify-center mx-auto text-xl shadow-glow">
-            ⚡
+        <div className="text-center space-y-3 relative">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-cyan-400 p-[1.5px] shadow-glow mx-auto flex items-center justify-center overflow-hidden">
+            <div className="h-full w-full bg-surface-950 rounded-[14px] flex items-center justify-center p-2">
+              <img src={NexoraLogo} alt="Nexora Logo" className="h-full w-full object-contain" />
+            </div>
           </div>
           <h1 className="text-2xl font-bold text-white tracking-tight">
             {isRegister ? 'Create your Nexora Account' : 'Welcome to Nexora AI'}

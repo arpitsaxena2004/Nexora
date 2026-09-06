@@ -96,9 +96,9 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onNavigate, setActiveGoa
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 animate-fadeIn">
+    <div className="max-w-4xl mx-auto space-y-10 animate-fadeIn pb-16">
       {/* Header */}
-      <div className="text-center space-y-2">
+      <div className="text-center space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-semibold">
           <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
           <span>Dynamic AI Orchestration Onboarding</span>
@@ -106,23 +106,23 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onNavigate, setActiveGoa
         <h1 className="text-3xl font-extrabold text-white tracking-tight">
           What is your primary goal?
         </h1>
-        <p className="text-xs text-slate-400 max-w-xl mx-auto">
+        <p className="text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
           Describe what you want to achieve in natural language. The Goal Understanding Agent will analyze missing requirements and assemble a tailored multi-agent team.
         </p>
       </div>
 
       {step === 'input' && (
-        <div className="glass-panel p-6 space-y-6">
+        <div className="glass-panel p-10 space-y-10">
           {/* Presets */}
           <div>
-            <div className="text-xs font-semibold text-slate-400 mb-2">Or choose a benchmark preset:</div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="text-xs font-semibold text-slate-400 mb-4">Or choose a benchmark preset:</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {presets.map((p, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => handleApplyPreset(p)}
-                  className="p-3.5 rounded-xl bg-surface-950/50 border border-white/5 hover:border-brand-500/40 text-left transition-all group"
+                  className="p-5 rounded-xl bg-surface-950/50 border border-white/5 hover:border-brand-500/40 text-left transition-all group"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-white group-hover:text-brand-300">{p.title}</span>
@@ -134,7 +134,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onNavigate, setActiveGoa
             </div>
           </div>
 
-          <form onSubmit={handleAnalyzeGoal} className="space-y-4">
+          <form onSubmit={handleAnalyzeGoal} className="space-y-5">
             {/* Goal Track Selector */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
@@ -210,7 +210,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onNavigate, setActiveGoa
       )}
 
       {step === 'analyzed' && analyzedGoal && (
-        <div className="glass-panel p-6 space-y-6">
+        <div className="glass-panel p-8 space-y-7">
           <div className="flex items-center justify-between pb-4 border-b border-white/10">
             <div>
               <span className="text-xs text-brand-400 font-bold uppercase tracking-wider">Analysis Complete</span>
@@ -223,7 +223,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onNavigate, setActiveGoa
           </div>
 
           {/* Extracted Objective & Target */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-3 rounded-xl bg-surface-950/60 border border-white/5">
               <div className="text-[10px] uppercase font-bold text-slate-400">Track & Industry</div>
               <div className="text-xs font-bold text-slate-200 capitalize mt-0.5">

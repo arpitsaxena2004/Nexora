@@ -85,72 +85,89 @@ IMPORTANT: You MUST respond ONLY with valid, parseable JSON matching the require
   }
 
   private static async callGemini(apiKey: string, options: LLMRequestOptions): Promise<LLMResponse> {
-    return new Promise((resolve, reject) => {
-      const model = 'gemini-1.5-flash';
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    const candidateModels = ['gemini-3.7-flash', 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-flash-latest'];
+    let lastError: any = null;
 
-      const contents: any[] = [];
-      if (options.systemPrompt) {
-        contents.push({
-          role: 'user',
-          parts: [{ text: `SYSTEM INSTRUCTIONS: ${options.systemPrompt}` }],
-        });
-      }
-      contents.push({
-        role: 'user',
-        parts: [{ text: options.prompt }],
-      });
+    for (const model of candidateModels) {
+      try {
+        const res = await new Promise<LLMResponse>((resolve, reject) => {
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-      const bodyData = JSON.stringify({
-        contents,
-        generationConfig: {
-          temperature: options.temperature ?? 0.4,
-          maxOutputTokens: 2048,
-        },
-      });
-
-      const req = https.request(
-        url,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(bodyData),
-          },
-        },
-        (res) => {
-          let data = '';
-          res.on('data', (chunk) => (data += chunk));
-          res.on('end', () => {
-            try {
-              const parsed = JSON.parse(data);
-              if (parsed.error) {
-                return reject(new Error(parsed.error.message || 'Gemini API Error'));
-              }
-              const candidate = parsed.candidates?.[0]?.content?.parts?.[0]?.text || '';
-              const promptTokens = parsed.usageMetadata?.promptTokenCount || Math.ceil(options.prompt.length / 4);
-              const completionTokens = parsed.usageMetadata?.candidatesTokenCount || Math.ceil(candidate.length / 4);
-
-              resolve({
-                text: candidate,
-                tokensUsed: {
-                  prompt: promptTokens,
-                  completion: completionTokens,
-                  total: promptTokens + completionTokens,
-                },
-                providerUsed: 'google-gemini',
-              });
-            } catch (err) {
-              reject(err);
-            }
+          const contents: any[] = [];
+          if (options.systemPrompt) {
+            contents.push({
+              role: 'user',
+              parts: [{ text: `SYSTEM INSTRUCTIONS: ${options.systemPrompt}` }],
+            });
+          }
+          contents.push({
+            role: 'user',
+            parts: [{ text: options.prompt }],
           });
-        }
-      );
 
-      req.on('error', (err) => reject(err));
-      req.write(bodyData);
-      req.end();
-    });
+          const bodyData = JSON.stringify({
+            contents,
+            generationConfig: {
+              temperature: options.temperature ?? 0.4,
+              maxOutputTokens: 2048,
+            },
+          });
+
+          const req = https.request(
+            url,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(bodyData),
+              },
+            },
+            (res) => {
+              let data = '';
+              res.on('data', (chunk) => (data += chunk));
+              res.on('end', () => {
+                try {
+                  const parsed = JSON.parse(data);
+                  if (parsed.error) {
+                    return reject(new Error(parsed.error.message || 'Gemini API Error'));
+                  }
+                  const candidate = parsed.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                  const promptTokens = parsed.usageMetadata?.promptTokenCount || Math.ceil(options.prompt.length / 4);
+                  const completionTokens = parsed.usageMetadata?.candidatesTokenCount || Math.ceil(candidate.length / 4);
+
+                  resolve({
+                    text: candidate,
+                    tokensUsed: {
+                      prompt: promptTokens,
+                      completion: completionTokens,
+                      total: promptTokens + completionTokens,
+                    },
+                    providerUsed: `google-gemini (${model})`,
+                  });
+                } catch (err) {
+                  reject(err);
+                }
+              });
+            }
+          );
+
+          req.on('error', (err) => reject(err));
+          req.setTimeout(20000, () => {
+            req.destroy();
+            reject(new Error(`Gemini request timeout on ${model}`));
+          });
+          req.write(bodyData);
+          req.end();
+        });
+
+        return res;
+      } catch (err: any) {
+        lastError = err;
+        // Continue to next candidate model
+      }
+    }
+
+    throw lastError || new Error('All Gemini model candidates failed');
   }
 
   private static async callOpenAI(apiKey: string, options: LLMRequestOptions): Promise<LLMResponse> {

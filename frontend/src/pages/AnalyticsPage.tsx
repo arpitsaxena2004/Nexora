@@ -27,9 +27,9 @@ export const AnalyticsPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fadeIn pb-16">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/5 pb-4">
+      <div className="flex items-center justify-between border-b border-white/5 pb-5">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
             📊 Platform Analytics & Telemetry
@@ -51,8 +51,8 @@ export const AnalyticsPage: React.FC = () => {
       ) : (
         <>
           {/* Top KPI Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="card space-y-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 stagger-grid">
+            <div className="glass-card p-5 space-y-1.5">
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Tasks Run</span>
               <div className="text-2xl font-extrabold text-white">
                 {telemetry?.totalTasksRun ?? 142}
@@ -62,7 +62,7 @@ export const AnalyticsPage: React.FC = () => {
               </span>
             </div>
 
-            <div className="card space-y-1">
+            <div className="glass-card p-5 space-y-1.5">
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Avg Latency / Task</span>
               <div className="text-2xl font-extrabold text-white">
                 {telemetry?.avgExecutionTimeSec ? `${telemetry.avgExecutionTimeSec}s` : '1.84s'}
@@ -70,7 +70,7 @@ export const AnalyticsPage: React.FC = () => {
               <span className="text-xs text-primary-400 font-medium">⚡ High-throughput DAG</span>
             </div>
 
-            <div className="card space-y-1">
+            <div className="glass-card p-5 space-y-1.5">
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tokens Processed</span>
               <div className="text-2xl font-extrabold text-white">
                 {telemetry?.totalTokensConsumed ? telemetry.totalTokensConsumed.toLocaleString() : '842,190'}
@@ -78,7 +78,7 @@ export const AnalyticsPage: React.FC = () => {
               <span className="text-xs text-slate-400 font-medium">Estimated cost: $1.26</span>
             </div>
 
-            <div className="card space-y-1">
+            <div className="glass-card p-5 space-y-1.5">
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Autonomous Fleet</span>
               <div className="text-2xl font-extrabold text-emerald-400">
                 13 Agents
@@ -88,7 +88,7 @@ export const AnalyticsPage: React.FC = () => {
           </div>
 
           {/* Per-Agent Performance Breakdown */}
-          <div className="card space-y-4">
+          <div className="glass-panel p-6 space-y-5">
             <h2 className="text-base font-semibold text-white">Autonomous Agent Fleet Performance</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs text-slate-300">

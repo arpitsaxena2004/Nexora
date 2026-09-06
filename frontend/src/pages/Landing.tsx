@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight, Zap, Brain, Shield, Rocket, Briefcase, Bot, ChevronDown } from 'lucide-react';
 import { AGENT_DEFINITIONS, computeConstellationPositions, getActiveAgentsForGoal } from '../services/agentService';
 import { AgentData } from '../components/3d/AgentNetwork';
+import NexoraLogo from '../utils/NexoraLogo.png';
 
 // Lazy load the heavy 3D scene
 const Scene = lazy(() => import('../components/3d/Scene').then((m) => ({ default: m.Scene })));
@@ -92,11 +93,13 @@ export const Landing: React.FC<LandingProps> = ({ onNavigate }) => {
     <div className="min-h-screen bg-[#090d16] text-white overflow-x-hidden">
       {/* ─── Sticky Navbar ─── */}
       <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-12 backdrop-blur-xl bg-[#090d16]/70 border-b border-white/5">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-cyan-400 flex items-center justify-center">
-            <Zap className="h-4 w-4 text-white" />
+        <div className="flex items-center gap-2.5">
+          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-cyan-400 p-[1px] shadow-glow flex items-center justify-center overflow-hidden">
+            <div className="h-full w-full bg-surface-950 rounded-[11px] flex items-center justify-center p-1">
+              <img src={NexoraLogo} alt="Nexora Logo" className="h-full w-full object-contain" />
+            </div>
           </div>
-          <span className="font-bold text-lg tracking-tight">
+          <span className="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-cyan-100 to-cyan-400 bg-clip-text text-transparent">
             Nexora<span className="text-cyan-400 font-extrabold ml-0.5">AI</span>
           </span>
         </div>

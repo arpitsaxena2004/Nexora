@@ -90,16 +90,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, setActiveGoalT
   }, [selectedAgentName, agents]);
 
   return (
-    <div className="space-y-6 animate-fadeIn pb-12">
+    <div className="space-y-10 animate-fadeIn pb-16">
       {/* ─── TOP HERO: 3D Neural Orchestrator Command Center ─── */}
-      <div className="glass-panel relative overflow-hidden bg-gradient-to-br from-surface-900/90 via-surface-950/95 to-brand-950/50 border border-brand-500/25 shadow-2xl rounded-3xl p-6 lg:p-8">
+      <div className="glass-panel relative overflow-hidden bg-gradient-to-br from-surface-900/90 via-surface-950/95 to-brand-950/50 border border-brand-500/25 shadow-2xl rounded-3xl p-8 lg:p-10">
         {/* Glow ambient background lights */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-brand-500/15 rounded-full blur-3xl pointer-events-none -mt-24" />
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mb-20" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
           {/* Left Column: Intelligence & Status (5 or 6 cols) */}
-          <div className="lg:col-span-5 space-y-4">
+          <div className="lg:col-span-5 space-y-5">
             {activeGoal ? (
               <>
                 <div className="flex items-center gap-2">
@@ -121,7 +121,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, setActiveGoalT
                 </p>
 
                 {/* Readiness & Workflow Stats */}
-                <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="grid grid-cols-2 gap-4 pt-3">
                   <div className="p-3 rounded-2xl bg-surface-950/80 border border-white/10">
                     <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Readiness Score</div>
                     <div className="text-2xl font-black text-cyan-400 flex items-baseline gap-1 mt-0.5">
@@ -139,7 +139,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, setActiveGoalT
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 pt-2">
+                <div className="flex items-center gap-3 pt-3">
                   <button
                     onClick={() => onNavigate('workflows', { goalId: activeGoal._id, workflowId: activeWorkflow?._id })}
                     className="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold shadow-glow flex items-center gap-2 transition-all"
@@ -317,7 +317,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, setActiveGoalT
 
       {/* ─── Pending Approvals Alert Banner ─── */}
       {pendingApprovals.length > 0 && (
-        <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between gap-5">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
               <ShieldAlert className="h-5 w-5" />
@@ -341,8 +341,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, setActiveGoalT
       )}
 
       {/* ─── Quick Stats Grid ─── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="glass-card p-4 flex items-center gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 stagger-grid">
+        <div className="glass-card p-5 flex items-center gap-4">
           <div className="h-10 w-10 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400">
             <Layers className="h-5 w-5" />
           </div>
@@ -352,7 +352,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, setActiveGoalT
           </div>
         </div>
 
-        <div className="glass-card p-4 flex items-center gap-3">
+        <div className="glass-card p-5 flex items-center gap-4">
           <div className="h-10 w-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
             <TrendingUp className="h-5 w-5" />
           </div>
@@ -362,7 +362,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, setActiveGoalT
           </div>
         </div>
 
-        <div className="glass-card p-4 flex items-center gap-3">
+        <div className="glass-card p-5 flex items-center gap-4">
           <div className="h-10 w-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
             <Bot className="h-5 w-5" />
           </div>
@@ -372,7 +372,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, setActiveGoalT
           </div>
         </div>
 
-        <div className="glass-card p-4 flex items-center gap-3">
+        <div className="glass-card p-5 flex items-center gap-4">
           <div className="h-10 w-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
             <Clock className="h-5 w-5" />
           </div>
@@ -385,13 +385,18 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, setActiveGoalT
 
       {/* ─── Specialized Workspaces & Fast Actions ─── */}
       <div>
-        <h2 className="text-sm font-bold text-slate-300 uppercase tracking-wider mb-3">
-          Specialized Workspaces & Fast Actions
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="section-header">
+          <div>
+            <h2 className="section-title">
+              Specialized Workspaces & Fast Actions
+            </h2>
+            <p className="section-subtitle">Launch purpose-built tools for career, startup, and research tracks</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 stagger-grid">
           <button
             onClick={() => onNavigate('career')}
-            className="glass-panel-hover p-4 text-left group"
+            className="glass-panel-hover p-5 text-left group"
           >
             <div className="h-8 w-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
               <FileText className="h-4 w-4" />
@@ -453,28 +458,28 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, setActiveGoalT
 
       {/* ─── Autonomous Agent Fleet Grid ─── */}
       <div>
-        <div className="flex items-center justify-between mb-3">
+        <div className="section-header">
           <div>
-            <h2 className="text-sm font-bold text-slate-300 uppercase tracking-wider">
+            <h2 className="section-title">
               Autonomous Agent Fleet
             </h2>
-            <p className="text-xs text-slate-400">13 specialized agents synchronized and ready for DAG orchestration</p>
+            <p className="section-subtitle">13 specialized agents synchronized and ready for DAG orchestration</p>
           </div>
           <button
             onClick={() => onNavigate('agents')}
-            className="text-xs text-brand-400 hover:text-brand-300 font-semibold"
+            className="text-xs text-brand-400 hover:text-brand-300 font-semibold transition-colors"
           >
             View Full Registry &rarr;
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 stagger-grid">
           {agents.map((agent) => (
             <div
               key={agent.agentId || agent.name}
               onClick={() => setSelectedAgentName(agent.name)}
-              className={`glass-card p-4 hover:border-brand-500/50 transition-all cursor-pointer ${
-                selectedAgentName === agent.name ? 'border-brand-500 ring-1 ring-brand-500/40' : ''
+              className={`glass-card p-5 hover:border-brand-500/50 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer ${
+                selectedAgentName === agent.name ? 'border-brand-500 ring-1 ring-brand-500/40 shadow-glow' : ''
               }`}
             >
               <div className="flex items-start justify-between gap-2">

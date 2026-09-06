@@ -10,6 +10,7 @@ import {
   BarChart3,
   Bot,
 } from 'lucide-react';
+import NexoraLogo from '../../utils/NexoraLogo.png';
 
 interface SidebarProps {
   currentTab: string;
@@ -30,13 +31,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab }) => 
   ];
 
   return (
-    <aside className="w-64 border-r border-white/10 bg-surface-950/80 backdrop-blur-xl flex flex-col justify-between p-4 shrink-0">
+    <aside className="w-64 border-r border-white/10 bg-surface-950/80 backdrop-blur-xl flex flex-col justify-between p-5 shrink-0">
       <div className="space-y-6">
         <div>
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-3">
             Navigation
           </div>
-          <nav className="space-y-1">
+          <nav className="space-y-1.5">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = currentTab === item.id;
@@ -44,7 +45,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab }) => 
                 <button
                   key={item.id}
                   onClick={() => onSelectTab(item.id)}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-semibold transition-all duration-200 ${
                     isActive
                       ? 'bg-gradient-to-r from-brand-600/30 to-brand-500/10 border border-brand-500/40 text-white shadow-sm'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent'
@@ -63,12 +64,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab }) => 
       </div>
 
       {/* System Status Footer */}
-      <div className="p-3 rounded-xl bg-surface-900/60 border border-white/5 text-[11px] text-slate-400">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"></span>
-          <span className="font-semibold text-slate-300">Multi-Agent Core</span>
+      <div className="p-4 rounded-2xl bg-gradient-to-br from-surface-900/90 to-surface-950/90 border border-white/5 space-y-2">
+        <div className="flex items-center gap-2.5">
+          <div className="h-7 w-7 rounded-lg bg-surface-950 p-1 border border-brand-500/30 flex items-center justify-center shrink-0">
+            <img src={NexoraLogo} alt="Nexora" className="h-full w-full object-contain" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"></span>
+              <span className="font-semibold text-slate-200 text-[11px] truncate">Nexora Engine</span>
+            </div>
+            <div className="text-[9.5px] text-slate-400 truncate">13 Agents & RAG Online</div>
+          </div>
         </div>
-        <div className="text-[10px] text-slate-400">13 Active Specialized Agents & RAG Hub Online</div>
       </div>
     </aside>
   );

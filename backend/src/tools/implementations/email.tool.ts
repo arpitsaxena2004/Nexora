@@ -1,4 +1,5 @@
 import { BaseTool, ToolExecutionContext } from '../base.tool';
+import { emailService } from '../../services/email.service';
 
 export class EmailTool extends BaseTool {
   readonly name = 'email_dispatch';
@@ -24,20 +25,29 @@ export class EmailTool extends BaseTool {
   ): Promise<Record<string, any>> {
     const { recipient, subject, bodyText, replyTo } = params;
 
-    // Dispatches email through SMTP / SendGrid / Postmark provider
-    const dispatchId = `msg_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    // Dispatches real email through SMTP provider or fallback simulation
+    const result = await emailService.sendEmail({
+      to: recipient,
+      subject,
+      text: bodyText,
+      replyTo,
+    });
+
     const sentAt = new Date();
 
     return {
-      dispatchId,
-      status: 'delivered',
+      dispatchId: result.messageId,
+      status: result.status === 'sent' ? 'delivered' : result.status,
       recipient,
       subject,
-      contentPreview: bodyText.substring(0, 100) + '...',
+      contentPreview: bodyText.substring(0, 100) + (bodyText.length > 100 ? '...' : ''),
       replyTo: replyTo || 'user@agentflow.ai',
       sentAt,
       senderUserId: context.userId.toString(),
-      message: `Email successfully sent to ${recipient}`,
+      message: result.success
+        ? `Email successfully sent to ${recipient}`
+        : `Email delivery failed: ${result.error || 'Unknown error'}`,
     };
   }
 }
+

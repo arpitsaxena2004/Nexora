@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { workflowsApi } from '../services/api';
 import { DAGTask3D } from '../components/3d/WorkflowDAG3D';
+import { AgentOutputFormatter } from '../components/workflow/AgentOutputFormatter';
 
 // Lazy load 3D scene components
 const Scene = lazy(() => import('../components/3d/Scene').then((m) => ({ default: m.Scene })));
@@ -369,9 +370,9 @@ export const WorkflowView: React.FC<WorkflowViewProps> = ({ workflowId, onNaviga
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn pb-12">
+    <div className="space-y-8 animate-fadeIn pb-16">
       {/* Workflow Header & Controls */}
-      <div className="glass-panel p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <div className="glass-panel p-6 lg:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5">
@@ -463,9 +464,9 @@ export const WorkflowView: React.FC<WorkflowViewProps> = ({ workflowId, onNaviga
       </div>
 
       {/* Main Execution View: 3D DAG Pipeline or 2D Node Stream + Inspector */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left / Center Canvas (7 cols) */}
-        <div className="lg:col-span-7 space-y-4">
+        <div className="lg:col-span-7 space-y-5">
           <div className="flex items-center justify-between">
             <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
               <Layers className="h-4 w-4 text-cyan-400" />
@@ -601,7 +602,7 @@ export const WorkflowView: React.FC<WorkflowViewProps> = ({ workflowId, onNaviga
         </div>
 
         {/* Right: Task Output & Inspector Drawer (5 cols) */}
-        <div className="lg:col-span-5 space-y-4">
+        <div className="lg:col-span-5 space-y-5">
           <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
             <Bot className="h-4 w-4 text-brand-400" />
             <span>Agent Output Inspector</span>
@@ -615,7 +616,7 @@ export const WorkflowView: React.FC<WorkflowViewProps> = ({ workflowId, onNaviga
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.2 }}
-                className="glass-panel p-5 space-y-4 border-brand-500/30"
+                className="glass-panel p-6 space-y-5 border-brand-500/30"
               >
                 <div className="flex items-center justify-between pb-3 border-b border-white/10">
                   <div>
@@ -637,15 +638,11 @@ export const WorkflowView: React.FC<WorkflowViewProps> = ({ workflowId, onNaviga
                   </div>
 
                   {selectedTask.outputPayload ? (
-                    <div>
-                      <div className="text-[10px] uppercase font-bold text-cyan-400 mb-1 flex items-center gap-1.5">
-                        <Sparkles className="h-3.5 w-3.5" />
-                        <span>Synthesized Agent Output</span>
-                      </div>
-                      <pre className="p-3.5 rounded-xl bg-surface-950/90 border border-white/10 text-[11px] text-slate-200 font-mono overflow-x-auto max-h-80 leading-relaxed">
-                        {JSON.stringify(selectedTask.outputPayload, null, 2)}
-                      </pre>
-                    </div>
+                    <AgentOutputFormatter
+                      payload={selectedTask.outputPayload}
+                      title={selectedTask.title}
+                      agentType={selectedTask.agentType}
+                    />
                   ) : (
                     <div className="p-6 text-center rounded-xl bg-surface-950/40 border border-dashed border-white/10">
                       <Clock className="h-6 w-6 text-slate-500 mx-auto mb-2" />

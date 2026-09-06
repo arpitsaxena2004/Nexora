@@ -26,9 +26,9 @@ export const AgentsPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fadeIn pb-16">
       {/* Header */}
-      <div className="border-b border-white/5 pb-4">
+      <div className="border-b border-white/5 pb-5">
         <h1 className="text-2xl font-bold text-white flex items-center gap-2">
           🤖 Autonomous Agent Fleet Directory (13 Agents)
         </h1>
@@ -40,19 +40,19 @@ export const AgentsPage: React.FC = () => {
       {loading ? (
         <div className="card text-center py-16 text-slate-400 text-sm">Inspecting agent fleet registry...</div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Agent Fleet Grid (Left) */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 stagger-grid">
             {agents.map(a => {
               const isSelected = selectedAgent?.name === a.name || selectedAgent?.agentId === a.agentId;
               return (
                 <div
                   key={a.name || a.agentId}
                   onClick={() => setSelectedAgent(a)}
-                  className={`card cursor-pointer transition-all border ${
+                  className={`glass-card p-5 cursor-pointer transition-all duration-300 border ${
                     isSelected
-                      ? 'border-primary-500 bg-primary-950/20 shadow-glow'
-                      : 'border-white/5 hover:border-white/20'
+                      ? 'border-brand-500 bg-brand-950/20 shadow-glow'
+                      : 'border-white/5 hover:border-white/20 hover:-translate-y-0.5'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
@@ -75,7 +75,7 @@ export const AgentsPage: React.FC = () => {
           {/* Selected Agent Inspector (Right) */}
           <div className="lg:col-span-5">
             {selectedAgent ? (
-              <div className="card space-y-4 sticky top-6 animate-fade-in">
+              <div className="glass-panel p-6 space-y-5 sticky top-6 animate-fadeIn">
                 <div className="flex items-center justify-between border-b border-white/5 pb-3">
                   <div>
                     <h3 className="text-lg font-bold text-white">{selectedAgent.displayName || selectedAgent.name || selectedAgent.agentId}</h3>
@@ -107,7 +107,7 @@ export const AgentsPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-white/5">
+                <div className="grid grid-cols-2 gap-3 text-xs pt-3 border-t border-white/5">
                   <div className="p-2.5 bg-slate-900/60 rounded-xl border border-white/5">
                     <span className="text-slate-400 block text-[10px] uppercase font-bold">Min Confidence</span>
                     <span className="text-sm font-bold text-emerald-400 font-mono">0.85 / 1.0</span>

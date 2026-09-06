@@ -75,9 +75,9 @@ export const ApprovalsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fadeIn pb-16">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-5">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
             🛡️ Human-in-the-Loop & Tool Sandbox

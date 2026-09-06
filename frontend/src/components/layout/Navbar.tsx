@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { notificationsApi, approvalsApi } from '../../services/api';
 import { Bell, ShieldAlert, Sparkles, Check, LogOut, User as UserIcon } from 'lucide-react';
+import NexoraLogo from '../../utils/NexoraLogo.png';
 
 interface NavbarProps {
   onNavigate?: (tab: string) => void;
@@ -49,10 +50,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, activeGoalTitle }) =
     <header className="sticky top-0 z-40 h-16 w-full border-b border-white/10 bg-surface-950/70 backdrop-blur-xl px-6 flex items-center justify-between">
       {/* Left: Brand / Active Goal */}
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-cyan-400 p-[1px] shadow-glow flex items-center justify-center">
-            <div className="h-full w-full bg-surface-950 rounded-[11px] flex items-center justify-center">
-              <Sparkles className="h-4 w-4 text-cyan-400" />
+        <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => onNavigate && onNavigate('dashboard')}>
+          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-cyan-400 p-[1px] shadow-glow flex items-center justify-center overflow-hidden">
+            <div className="h-full w-full bg-surface-950 rounded-[11px] flex items-center justify-center p-1">
+              <img src={NexoraLogo} alt="Nexora Logo" className="h-full w-full object-contain" />
             </div>
           </div>
           <span className="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-cyan-100 to-cyan-400 bg-clip-text text-transparent">

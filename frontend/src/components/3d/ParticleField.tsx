@@ -37,10 +37,11 @@ export const ParticleField: React.FC<ParticleFieldProps> = ({ count = 250, radiu
     return { positions: pos, colors: cols, speeds: spd };
   }, [actualCount, radius]);
 
-  useFrame(({ clock }) => {
-    if (!pointsRef.current) return;
+  useFrame((state) => {
+    if (!pointsRef.current || !pointsRef.current.geometry?.attributes?.position) return;
     const posArray = pointsRef.current.geometry.attributes.position.array as Float32Array;
-    const t = clock.getElapsedTime();
+    if (!posArray) return;
+    const t = state.clock.elapsedTime || 0;
 
     for (let i = 0; i < actualCount; i++) {
       const i3 = i * 3;

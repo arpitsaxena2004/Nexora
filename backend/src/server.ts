@@ -38,8 +38,11 @@ app.use(
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Request Logger (Development)
-app.use((req: Request, _res: Response, next: NextFunction) => {
+// Request Logger & DB Connection Assurance (Development)
+app.use(async (req: Request, _res: Response, next: NextFunction) => {
+  if (mongoose.connection.readyState !== 1) {
+    await connectDB();
+  }
   if (env.NODE_ENV === 'development') {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
   }

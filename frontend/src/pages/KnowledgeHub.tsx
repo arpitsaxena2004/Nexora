@@ -243,7 +243,7 @@ A deterministic DAG-driven multi-agent platform combining RAG vector memory with
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn pb-12">
+    <div className="space-y-8 animate-fadeIn pb-16">
       {/* Header */}
       <div className="glass-panel p-6 border-b border-white/5">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
